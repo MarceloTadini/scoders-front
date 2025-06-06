@@ -1,4 +1,4 @@
-# 🚀 Dashboard de Produtos - S.Coders 🚀
+# 🚀 Dashboard de Produtos - Scoders 🚀
 
 Este é um dashboard interativo e em tempo real para gerenciamento e visualização de produtos, construído com **Next.js**.  
 Ele oferece uma interface moderna e responsiva para acompanhar suas informações de produtos de forma eficiente.
