@@ -34,7 +34,7 @@ Este projeto foi desenvolvido utilizando as seguintes ferramentas e bibliotecas 
 
 Você pode explorar o dashboard online através do deploy feito na Vercel:
 
-👉 Acesse aqui: https://scoders-front-fvv9q97cn-marcelotadinis-projects.vercel.app/
+👉 Acesse aqui: https://scoders-front.vercel.app/dashboard
 - **OBSERVAÇÃO**: É necessário esperar até que o backend seja ativado. Para isso, acesse a rota /dashboard e aguarde até que os dados sejam retornados.
 
 ## 🚀 Como Executar o Projeto (com Docker)
