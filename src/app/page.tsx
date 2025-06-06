@@ -1,103 +1,124 @@
-import Image from "next/image";
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import Link from "next/link";
+import * as Yup from "yup";
+import ErrorInputText from "./components/ErrorInputText";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import axios from "axios";
+
+const validationSchema = Yup.object({
+  email: Yup.string()
+    .email("Por favor, informe um e-mail válido")
+    .required("Por favor, informe o seu email"),
+  password: Yup.string()
+    .required("Por favor, informe sua senha"),
+});
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+  const router = useRouter();
+
+  const handleLogin = async (
+    values: { email: string; password: string },
+    { resetForm }: { resetForm: () => void }
+  ) => {
+    setLoading(true);
+    setError("");
+
+    try {
+      await axios.post("/api/login", values);
+      resetForm();
+      router.push("/dashboard");
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response) {
+        setError(err.response.data.message || "Erro ao fazer login");
+      } else {
+        setError("Erro ao fazer login");
+      }
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <main className="flex flex-col items-center justify-center min-h-screen w-screen bg-gradient-to-br from-blue-500 to-indigo-600 p-6">
+      {/* Seção informativa */}
+      <section className="text-center mb-8">
+        <h1 className="text-4xl font-bold text-white mb-2">Bem-vindo ao Scoders Products</h1>
+        <p className="text-lg text-gray-200 max-w-lg mx-auto">
+          Tenha um controle em tempo real e administre todos os seu produtos! Faça login para acessar e compartilhar seus próprios produtos.
+        </p>
+      </section>
+
+      {/* Formulário */}
+      <Formik
+        initialValues={{ email: "", password: "" }}
+        validationSchema={validationSchema}
+        onSubmit={handleLogin}
+      >
+        {({ isSubmitting, isValid }) => (
+          <Form className="flex flex-col w-[90vw] sm:w-[400px] bg-white shadow-lg rounded-lg p-6">
+            <h2 className="text-2xl font-semibold text-gray-900 text-center mb-4">Login</h2>
+
+            {/* Campo Email */}
+            <fieldset>
+              <label className="text-sm text-gray-700 mb-1">E-mail</label>
+              <Field
+                className="text-lg bg-gray-100 border border-gray-300 rounded-lg p-2 w-full mb-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                name="email"
+                type="email"
+              />
+              <ErrorMessage name="email" component={ErrorInputText} />
+            </fieldset>
+
+            {/* Campo Senha */}
+            <fieldset>
+              <label className="text-sm text-gray-700 mb-1">Senha</label>
+              <Field
+                className="text-lg bg-gray-100 border border-gray-300 rounded-lg p-2 w-full mb-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                name="password"
+                type="password"
+              />
+              <ErrorMessage name="password" component={ErrorInputText} />
+            </fieldset>
+
+            {error && <p className="text-red-500 text-center text-sm mb-3">{error}</p>}
+
+            {/* Botão de Envio */}
+            <button
+              type="submit"
+              disabled={isSubmitting || !isValid}
+              className={`w-full p-2 text-white rounded-lg transition cursor-pointer ${isSubmitting || !isValid ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
+                }`}
+            >
+              {isSubmitting ? "Entrando..." : "Entrar"}
+            </button>
+          </Form>
+        )}
+      </Formik>
+
+      <p className="text-center text-sm text-gray-200 mt-4">
+        Não tem uma conta?{" "}
+        <Link href="/register" className="text-white hover:bg-blue-700 rounded-lg p-2 bg-blue-500">
+          Cadastre-se aqui
+        </Link>
+      </p>
+
+      <div className="mt-6 text-center">
+        <p className="text-gray-200 text-sm">Caso não seja um admin, acesse o blog diretamente.</p>
+        <Link
+          href="/dashboard"
+          className="mt-2 inline-block cursor-pointer bg-green-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-green-600 transition"
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+          Acessar Dashboard
+        </Link>
+      </div>
+
+    </main>
   );
 }
