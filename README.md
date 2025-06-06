@@ -55,5 +55,5 @@ Após a execução bem-sucedida, o dashboard estará acessível em http://localh
 
 ## 🚀 Backend
 Para acessar o repositório do backend, entre no link abaixo.
-👉 Acesse aqui: [https://scoders-front-fvv9q97cn-marcelotadinis-projects.vercel.app/](https://github.com/MarceloTadini/scoders-back)
+👉 Acesse aqui: [Repositório Backend](https://github.com/MarceloTadini/scoders-back)
 
