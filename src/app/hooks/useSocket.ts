@@ -54,7 +54,7 @@ export function useSocket(
     return () => {
       socket.disconnect();
     };
-  }, [onNewProduct, onProductUpdate]);
+  }, [onNewProduct, onProductUpdate, onProductDelete]);
 
   return socketRef.current;
 }
