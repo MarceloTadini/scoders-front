@@ -38,6 +38,9 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
       setProducts((prev) =>
         prev.map((p) => (p._id === updatedProduct._id ? updatedProduct : p))
       );
+    },
+    (deletedProductId: string) => {
+      setProducts((prev) => prev.filter((p) => p._id !== deletedProductId));
     }
   );
 

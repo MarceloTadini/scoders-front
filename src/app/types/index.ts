@@ -43,3 +43,21 @@ export interface DecodedToken {
   iat: number;
   exp: number;
 }
+
+export interface ProductSocketEvents {
+  productCreated: {
+    product: IProduct;
+    timestamp: string;
+    message: string;
+  };
+  productUpdated: {
+    product: IProduct;
+    timestamp: string;
+    message: string;
+  };
+  productDeleted: {
+    productId: string;
+    timestamp: string;
+    message: string;
+  };
+}

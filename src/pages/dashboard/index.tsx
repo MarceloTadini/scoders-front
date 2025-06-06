@@ -31,7 +31,7 @@ export default function DashboardProdutos() {
         },
       });
 
-      fetchProducts();
+      //fetchProducts();
       toast.success("Produto removido com sucesso!");
     } catch (err) {
       console.error("Erro ao remover produto:", err);

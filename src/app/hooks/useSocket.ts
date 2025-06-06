@@ -4,7 +4,8 @@ import { io, Socket } from "socket.io-client";
 
 export function useSocket(
   onNewProduct: (data: any) => void,
-  onProductUpdate: (data: any) => void
+  onProductUpdate: (data: any) => void,
+  onProductDelete: (data: any) => void
 ) {
   const socketRef = useRef<Socket | null>(null);
 
@@ -33,6 +34,11 @@ export function useSocket(
     socket.on("productUpdated", (data) => {
       console.log("♻️ Produto atualizado via socket:", data);
       onProductUpdate(data.product);
+    });
+
+    socket.on("productDeleted", (data) => {
+      console.log("🗑️ Produto Excluído via socket:", data);
+      onProductDelete(data.productId);
     });
 
     socket.on("disconnect", (reason) => {
