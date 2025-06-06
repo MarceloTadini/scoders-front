@@ -11,6 +11,7 @@ Ele oferece uma interface moderna e responsiva para acompanhar suas informaçõe
 - **Visualização em Tempo Real**: Acompanhe a quantidade total de produtos em cards dinâmicos.
 - **Insights por Categoria**: Visualize a quantidade de produtos por categoria em cards dedicados.
 - **Tabela Interativa de Produtos**: Exiba todos os produtos em uma tabela detalhada e fácil de navegar.
+- **OBSERVAÇÃO**: É necessário estar logado para criar, editar ou apagar um produto.
 
 ---
 
@@ -34,6 +35,7 @@ Este projeto foi desenvolvido utilizando as seguintes ferramentas e bibliotecas 
 Você pode explorar o dashboard online através do deploy feito na Vercel:
 
 👉 Acesse aqui: https://scoders-front-fvv9q97cn-marcelotadinis-projects.vercel.app/
+- **OBSERVAÇÃO**: É necessário esperar até que o backend seja ativado. Para isso, acesse a rota /dashboard e aguarde até que os dados sejam retornados.
 
 ## 🚀 Como Executar o Projeto (com Docker)
 
@@ -50,4 +52,8 @@ docker run -p 3001:3001 scoders-front
 ``` 
 
 Após a execução bem-sucedida, o dashboard estará acessível em http://localhost:3001 no seu navegador.
+
+## 🚀 Backend
+Para acessar o repositório do backend, entre no link abaixo.
+👉 Acesse aqui: [https://scoders-front-fvv9q97cn-marcelotadinis-projects.vercel.app/](https://github.com/MarceloTadini/scoders-back)
 
