@@ -41,12 +41,18 @@ Você pode explorar o dashboard online através do deploy feito na Vercel:
 
 Para colocar o dashboard em funcionamento na sua máquina usando Docker, siga os passos abaixo a partir da raiz do projeto:
 
-### 1. Construa a imagem Docker:
+### 1. Altere a BASE_URL
+Acesse o arquivo next.config.ts e altere a variável BASE_URL:
+```bash
+BASE_URL: "http://localhost:3000/"
+```
+
+### 2. Construa a imagem Docker:
 
 ```bash
 docker build -t scoders-front .
 ``` 
-### 2. Execute o contêiner Docker:
+### 3. Execute o contêiner Docker:
 ```bash
 docker run -p 3001:3001 scoders-front
 ``` 
