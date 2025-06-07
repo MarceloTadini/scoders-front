@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  env:{
+    BASE_URL: "https://product-api-7chz.onrender.com",//http://localhost:3000/
+  }
 };
 
 export default nextConfig;

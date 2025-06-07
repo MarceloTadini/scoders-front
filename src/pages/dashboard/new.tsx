@@ -3,20 +3,20 @@ import FormPost from "@/app/components/FormPost";
 import { IProduct } from "@/app/types";
 import { useAuth } from "@/app/context/AuthContext";
 import { toast } from "react-toastify";
-import { useProducts } from "@/app/context/ProductsContext";
+import api from "@/lib/api";
 
 export default function NewPostPage() {
   const {accessToken, isAuthenticated} = useAuth();
 
   const handleCreatePost = async (postData: IProduct) => {
     try {
-      await axios.post("https://product-api-7chz.onrender.com/product", postData, {
+      await api.post("/product", postData, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       });
 
-      toast.success("Product adicionado com sucesso!"); 
+      toast.success("Produto adicionado com sucesso!"); 
       
     } catch (err) {
       console.error("Erro ao adicionar product", err);

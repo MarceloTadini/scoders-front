@@ -1,12 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import axios from 'axios'; // Certifique-se de instalar o axios: npm install axios
+import api from '@/lib/api';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     const { email, password } = req.body;
 
     try {
-      const response = await axios.post('https://product-api-7chz.onrender.com/auth/login', {
+      const response = await api.post('/auth/login', {
         email: email,
         password: password,
       });

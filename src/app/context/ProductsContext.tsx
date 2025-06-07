@@ -1,8 +1,8 @@
 // context/ProductsContext.tsx
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import axios from "axios";
 import { IProduct, ProductsContextType } from "@/app/types";
 import { useSocket } from "@/app/hooks/useSocket";
+import api from "@/lib/api";
 
 const ProductsContext = createContext<ProductsContextType | undefined>(undefined);
 
@@ -13,7 +13,7 @@ export const ProductsProvider = ({ children }: { children: ReactNode }) => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get("https://product-api-7chz.onrender.com/product");
+      const response = await api.get("/product");
       setProducts(response.data);
     } catch (error) {
       setError(true);

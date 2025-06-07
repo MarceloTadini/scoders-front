@@ -2,6 +2,12 @@
 import { useEffect, useRef } from "react";
 import { io, Socket } from "socket.io-client";
 
+const SOCKET_URL =
+  process.env.BASE_URL === "https://product-api-7chz.onrender.com"
+    ? `${process.env.BASE_URL}/products`
+    : "localhost:3000/products";
+
+
 export function useSocket(
   onNewProduct: (data: any) => void,
   onProductUpdate: (data: any) => void,
@@ -10,7 +16,7 @@ export function useSocket(
   const socketRef = useRef<Socket | null>(null);
 
   useEffect(() => {
-    const socket = io("https://product-api-7chz.onrender.com/products", {
+    const socket = io(SOCKET_URL, {
       transports: ["websocket"],
       forceNew: true,
       reconnection: true,

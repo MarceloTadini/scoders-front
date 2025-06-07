@@ -3,16 +3,16 @@ import { useRouter } from "next/router";
 import { FilePenLineIcon, Trash2Icon, PlusCircleIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import axios from "axios";
 import { useAuth } from "@/app/context/AuthContext";
 import { toast } from "react-toastify";
 import { useMemo } from "react";
 import { IProduct } from "@/app/types";
 import { useProducts } from "@/app/context/ProductsContext";
+import api from "@/lib/api";
 
 export default function DashboardProdutos() {
   const router = useRouter();
-  const { products, loading, error, fetchProducts } = useProducts();
+  const { products, loading, error } = useProducts();
   const { accessToken, isAuthenticated } = useAuth();
 
   async function handleRemove(id: string) {
@@ -25,7 +25,7 @@ export default function DashboardProdutos() {
         return;
       }
 
-      await axios.delete(`https://product-api-7chz.onrender.com/product/${id}`, {
+      await api.delete(`/product/${id}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
